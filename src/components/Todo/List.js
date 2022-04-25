@@ -15,12 +15,12 @@ const List = props => {
 
                         {item.task}
 
-                        <div className = 'aciones'>
+                        <div className = 'actions'>
                             <span 
-                                className = {item.complete ? 'hide' : 'done'}
+                                className = {item.complete ? 'uncheck' : 'check'}
                                 onClick = {() => markAsCompleted(item.id)}
                             >
-                                <i className = "fa fa-check"></i>
+                                <i className = {item.complete ? 'fa-solid fa-x' : 'fa fa-check'}></i>
                             </span>
                             <span 
                                 className = "trash"
