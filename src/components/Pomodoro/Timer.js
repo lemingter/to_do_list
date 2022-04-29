@@ -12,7 +12,7 @@ class Timer extends Component {
                 message: '',
             }, 
 
-            time: 0,
+            time: 0
         };
 
         this.times = {
@@ -23,13 +23,13 @@ class Timer extends Component {
     }
 
     componentDidMount() {
-        this.setDefaultTime()
+        this.setDefaultTime();
     }
 
     setDefaultTime() {
         this.setState({
             time: this.times.defaultTime
-        })
+        });
     }
 
     setTimeForWork = () => {
@@ -37,8 +37,10 @@ class Timer extends Component {
             alert: {
                 type: 'work',
                 message: 'WORKING!',
-            }
-        })
+            },
+        });
+
+        this.setTime(this.times.defaultTime);
     }
 
     setTimeForShortBreak = () => {
@@ -46,8 +48,9 @@ class Timer extends Component {
             alert: {
                 type: 'shortBreak',
                 message: 'Taking a short break',
-            }
-        })
+            },
+        });
+        this.setTime(this.times.shortBreak);
     }
 
     setTimeForLongBreak = () => {
@@ -55,8 +58,55 @@ class Timer extends Component {
             alert: {
                 type: 'longBreak',
                 message: 'Taking a long break',
-            }
-        })
+            },
+        });
+        this.setTime(this.times.longBreak);
+    }
+
+    setTime = (newTime) => {
+        this.restartInterval();
+
+        this.setState({
+            time: newTime,
+        });
+    }
+
+    restartInterval = () => {
+        clearInterval(this.interval);
+
+        this.interval = setInterval(this.countDown, 1000);
+    }
+
+    countDown = () => {
+        if(this.state.time === 0) {
+            this.setState({
+                alert: {
+                    type: 'Beep',
+                    message: 'BeeeeeeeeeeeeeP',
+                }
+            });
+        }
+        else {
+            this.setState({
+                time: this.state.time - 1,
+            });
+        }
+    }
+
+    displayTimer(seconds) {
+        var min = Math.floor(seconds / 60);
+        var sec = seconds - (min * 60);
+        var res = "";
+
+        if(min < 10) {
+            res += "0";
+        }
+        res += min + ":";
+        if(sec < 10) {
+            res += "0";
+        }
+        res += sec;
+        return res;
     }
 
     render() {
@@ -69,7 +119,7 @@ class Timer extends Component {
                 </div>
 
                 <div className = "timer">
-                    00:00
+                    {this.displayTimer(time)}
                 </div>
 
                 <div className = "types">
@@ -82,14 +132,14 @@ class Timer extends Component {
 
                     <button 
                         className = "short"
-                        //onClick = {}
+                        onClick = {this.setTimeForShortBreak}
                     >
                         Short Break
                     </button>
 
                     <button 
                         className = "long"
-                        //onClick = {}
+                        onClick = {this.setTimeForLongBreak}
                     >
                         Long Break
                     </button>
