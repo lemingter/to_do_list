@@ -94,8 +94,8 @@ class Timer extends Component {
     }
 
     displayTimer(seconds) {
-        var min = Math.floor(seconds / 60);
-        var sec = seconds - (min * 60);
+        const min = Math.floor(seconds / 60);
+        const sec = seconds % 60;
         var res = "";
 
         if(min < 10) {
