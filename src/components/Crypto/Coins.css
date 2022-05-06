@@ -10,7 +10,9 @@
 .Crypto input {
     border-radius: 50px;
     background: #004ba0;
-    padding: 0px 5px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.75);
+    line-height: 34px;
+    padding: 0px 15px;
     font-size: 20px;
     font-weight: bold;
     color: #fff;

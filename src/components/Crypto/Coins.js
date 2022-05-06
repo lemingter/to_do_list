@@ -14,10 +14,11 @@ class Coins extends Component {
 
     handleOnChange = e => {
         const {target:{value}} = e;
+        const {state:{price}} = this;
 
         this.setState({
             dollars: value,
-            coins: (!(value % 10)) ? value / 10 : 0, 
+            coins: (!(value % price)) ? value / price : 0, 
         })
     }
 
@@ -34,7 +35,7 @@ class Coins extends Component {
                         value = {dollars}
                         onChange = {this.handleOnChange}
                     />
-                    <p>Precio de la crypto moneda: ${price}</p>
+                    <p>Precio de la crypto moneda: <strong>${price}</strong></p>
                     <h2>Puedes comprar {coins} monedas</h2>
                 </div>
             </div>
