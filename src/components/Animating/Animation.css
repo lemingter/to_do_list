@@ -1,0 +1,17 @@
+.Animation {
+    background-color: red;
+    transition: all 3s ease 0s;
+    margin: 50px;
+}
+
+.Animation .transition {
+    transition: all 3s ease 0s;
+    color: white;
+    padding-bottom: 10px;
+    opacity: 1;
+}
+
+.Animation .transition.show {
+    padding: 100px;
+    opacity: 0;
+}
