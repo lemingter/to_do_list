@@ -12,7 +12,9 @@ class Timer extends Component {
                 message: '',
             }, 
 
-            time: 0
+            time: 0,
+            working: false,
+            pause: false,
         };
 
         this.times = {
@@ -64,10 +66,12 @@ class Timer extends Component {
     }
 
     setTime = (newTime) => {
+
         this.restartInterval();
 
         this.setState({
             time: newTime,
+            working: true,
         });
     }
 
@@ -78,18 +82,21 @@ class Timer extends Component {
     }
 
     countDown = () => {
-        if(this.state.time === 0) {
-            this.setState({
-                alert: {
-                    type: 'Beep',
-                    message: 'BeeeeeeeeeeeeeP',
-                }
-            });
-        }
-        else {
-            this.setState({
-                time: this.state.time - 1,
-            });
+        if(!this.state.pause){
+            if(this.state.time === 0) {
+                this.setState({
+                    alert: {
+                        type: 'Beep',
+                        message: 'BeeeeeeeeeeeeeP',
+                    },
+                    working: false,
+                });
+            }
+            else {
+                this.setState({
+                    time: this.state.time - 1,
+                });
+            }
         }
     }
 
@@ -109,14 +116,34 @@ class Timer extends Component {
         return res;
     }
 
+    pauseTimer = () => {
+        this.setState({
+            pause: !this.state.pause,
+            
+        });
+        
+        console.log(this.state.pause);
+    }
+
+    stopTimer = () => {
+        this.setState({
+            time: this.times.defaultTime,
+            working: false
+        });
+        clearInterval(this.interval);
+    }
+
     render() {
-        const {alert: {message, type}, time} = this.state;
+        const {alert: {message, type}, time, working, pause} = this.state;
 
         return(
             <div className="Pomodoro">
-                <div className = {`alert ${type}`}>
-                    {message}
-                </div>
+                {
+                    (working)&&
+                    <div className = {`alert ${type}`}>
+                        {message}
+                    </div>
+                }
 
                 <div className = "timer">
                     {this.displayTimer(time)}
@@ -145,6 +172,19 @@ class Timer extends Component {
                     </button>
 
                 </div>
+                {
+                    (working)&&
+                    <div>
+                        <button 
+                            className = "pause"
+                            onClick = {this.pauseTimer}
+                        >{pause ? <i class="fa-solid fa-play"></i> : <i class="fa-solid fa-pause"></i>}</button>
+                        <button 
+                            className = "stop"
+                            onClick = {this.stopTimer}
+                        ><i class="fa-solid fa-stop"></i></button>
+                    </div>
+                }
 
             </div>
         )

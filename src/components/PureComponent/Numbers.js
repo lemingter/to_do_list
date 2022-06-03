@@ -28,7 +28,7 @@ class Numbers extends Component {
             else {
                 res = 0;
                 arr = value.split('');
-                arr.map(num => res+=parseInt(num));
+                arr.map(num => res += parseInt(num));
                 this.setState({
                     added: [
                         ...this.state.added,

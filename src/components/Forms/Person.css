@@ -1,0 +1,14 @@
+.Forma {
+    margin: 5% 30%;
+    border: 1px solid;
+}
+
+.Forma .error {
+    border: 1px solid red;
+
+}
+
+.Forma .errorMessage {
+    color: red;
+    font-size: 10px;
+}
