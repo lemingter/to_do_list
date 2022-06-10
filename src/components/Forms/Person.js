@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Person.css';
-import Popup from 'react-popup';
+import Popup from 'reactjs-popup';
 import './Popup.css';
 
 class Person extends Component {
@@ -40,23 +40,6 @@ class Person extends Component {
         })
 
         if(name.trim() && lastName.trim()) {
-            Popup.create({
-                title: 'Person information',
-                content: (
-                    <div>
-                        <p><strong>Name: </strong> {name} {lastName}</p>
-                        <p><strong>Email: </strong> {email}</p>
-                        {phone && <p><strong>Phone: </strong> {phone}</p>}
-                    </div>
-                ),
-                buttons: {
-                    right: [{
-                        text: 'Close',
-                        action: popup => popup.close()
-                    }]
-                }
-            })
-
             const data = {
                 name, 
                 lastName, 
@@ -124,7 +107,33 @@ class Person extends Component {
                             onChange = { this.handleOnChange }
                         />
                     </div>
-                    <input type="submit" value="Button" />
+                    <Popup 
+                        trigger={<button className="button"> Save Information </button>}
+                        modal
+                        disabled = {!(name.trim() && lastName.trim())}
+                    >
+                        {close => (
+                            <div className="modal">
+                                <button className="close" onClick={close}>
+                                    &times;
+                                </button>
+                                <div className="header"><strong>Person Information</strong></div>
+                                <div className="content">
+                                    <div><strong>Name: </strong>{name} {lastName}</div>
+                                    <div><strong>Email: </strong>{email}</div>
+                                    {phone && <div><strong>Phone: </strong>{phone}</div>}
+                                </div>
+                                <div className="actions">
+                                    <button
+                                        className="button"
+                                        onClick={() => {
+                                        close();
+                                        }}
+                                    >Close</button>
+                                </div>
+                            </div>
+                        )}
+                    </Popup>
                 </form>
             </div>
         );
